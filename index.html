@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebDump - Archive any website</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, #0b1120, #030712);
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+        .card {
+            max-width: 600px;
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(16px);
+            border-radius: 2rem;
+            padding: 2rem;
+            border: 1px solid #3b82f6;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2rem;
+            background: linear-gradient(120deg, #a78bfa, #3b82f6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .sub { color: #9ca3af; margin: 0.5rem 0 1.5rem; border-left: 3px solid #3b82f6; padding-left: 0.75rem; text-align: left; }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(95deg, #2563eb, #7c3aed);
+            border: none;
+            border-radius: 1.5rem;
+            padding: 0.85rem 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            margin: 1rem 0;
+            cursor: pointer;
+        }
+        .btn:hover { opacity: 0.9; }
+        hr { margin: 1rem 0; border-color: #1e293b; }
+        code { background: #0f172a; padding: 0.2rem 0.4rem; border-radius: 0.5rem; font-family: monospace; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>WebDump</h1>
+    <div class="sub">Archive any website - code in WebDump1, media in WebDump2</div>
+    <p style="color: #cbd5e1; margin-bottom: 1rem;">
+        This repository contains a crawler that downloads full websites and saves them into<br>
+        <code>WebDump1/&lt;domain&gt;/</code> and <code>WebDump2/&lt;domain&gt;/</code>.
+    </p>
+    <a href="https://github.com/Z-TEAM-OFFICIAL/WebDump.github.io/actions/workflows/crawl.yml" class="btn">Go to Actions Tab</a>
+    <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 0.5rem;">
+        Click "Run workflow", enter a URL, and the crawler will start.
+    </p>
+    <hr>
+    <div style="font-size:0.7rem; color:#6b7280;">
+        No token needed - the workflow uses GitHub's built-in GITHUB_TOKEN.
+    </div>
+</div>
+</body>
+</html>
