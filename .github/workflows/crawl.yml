@@ -1,0 +1,53 @@
+name: WebDump Crawler
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_url:
+        description: 'Website URL (e.g. https://www.google.com)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install Python 3.14.3 from source
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+          curl -O https://www.python.org/ftp/python/3.14.3/Python-3.14.3.tar.xz
+          tar -xf Python-3.14.3.tar.xz
+          cd Python-3.14.3
+          ./configure --enable-optimizations --prefix=/opt/python/3.14.3
+          make -j $(nproc)
+          sudo make altinstall
+          sudo ln -sf /opt/python/3.14.3/bin/python3.14 /usr/local/bin/python3.14
+          python3.14 --version
+        shell: bash
+
+      - name: Set Python 3.14 as default
+        run: echo "PATH=/opt/python/3.14.3/bin:$PATH" >> $GITHUB_ENV
+
+      - name: Install dependencies
+        run: python3.14 -m pip install -r requirements.txt
+
+      - name: Run crawler
+        run: |
+          python3.14 crawler.py --url "${{ github.event.inputs.target_url }}" \
+                            --output-code ./WebDump1 \
+                            --output-media ./WebDump2
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add WebDump1 WebDump2
+          git diff --staged --quiet || git commit -m "Archive ${{ github.event.inputs.target_url }} on $(date -u +'%Y-%m-%d %H:%M:%S')"
+          git push
