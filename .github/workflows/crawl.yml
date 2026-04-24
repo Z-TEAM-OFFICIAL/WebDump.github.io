@@ -18,20 +18,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install Python 3.14.3 from source
-        run: |
-          sudo apt update
-          sudo apt install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
-          curl -O https://www.python.org/ftp/python/3.14.3/Python-3.14.3.tar.xz
-          tar -xf Python-3.14.3.tar.xz
-          cd Python-3.14.3
-          ./configure --enable-optimizations --prefix=/opt/python/3.14.3
-          make -j $(nproc)
-          sudo make altinstall
-          sudo ln -sf /opt/python/3.14.3/bin/python3.14 /usr/local/bin/python3.14
-          python3.14 --version
-        shell: bash
-
       - name: Set Python 3.14 as default
         run: echo "PATH=/opt/python/3.14.3/bin:$PATH" >> $GITHUB_ENV
 
